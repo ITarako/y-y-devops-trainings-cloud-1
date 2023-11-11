@@ -1,0 +1,12 @@
+1) создать главный SA : resource-manager.admin iam.serviceAccounts.admin  container-registry.admin  load-balancer.admin  compute.admin  monitoring.admin vpc.admin  storage.admin
+2) генерим для этого ключа SA, ключ авторизации и сохраняем его в tf_key.json
+2) создаем registry: terraform apply -target yandex_container_registry.registry1
+3) сборка и пуш image:
+    cat tf_key.json | docker login --username json_key --password-stdin cr.yandex
+    docker build -t cr.yandex/crpo0af5ni5573mjgmku/catgpt:1 . (cr.yandex/crpo0af5ni5573mjgmku это ID container registry)
+    docker push cr.yandex/crpo0af5ni5573mjgmku/catgpt:1
+    docker logout cr.yandex
+
+4) terraform init
+5) terraform apply
+6) terraform destroy
